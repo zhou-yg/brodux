@@ -129,7 +129,7 @@ export default function combineReducers(reducers) {
     shapeAssertionError = e
   }
 
-  return function combination(state = {}, action) {
+  return function combination(state = {}, action, watchListeners) {
     if (shapeAssertionError) {
       throw shapeAssertionError
     }
@@ -143,6 +143,7 @@ export default function combineReducers(reducers) {
 
     let hasChanged = false
     const nextState = {}
+    const changedStateKey = [];
     for (let i = 0; i < finalReducerKeys.length; i++) {
       const key = finalReducerKeys[i]
       const reducer = finalReducers[key]
@@ -153,8 +154,24 @@ export default function combineReducers(reducers) {
         throw new Error(errorMessage)
       }
       nextState[key] = nextStateForKey
-      hasChanged = hasChanged || nextStateForKey !== previousStateForKey
+
+      let isChanged = nextStateForKey !== previousStateForKey;
+      if(isChanged){
+        changedStateKey.push(key);
+      }
+
+      hasChanged = hasChanged || isChanged;
     }
+
+    changedStateKey.forEach(key => {
+      const watchCallbacks = watchListeners[key];
+      if(watchCallbacks && watchCallbacks.length > 0){
+        watchCallbacks.forEach(fn => {
+          fn(nextState[key], state[key]);
+        });
+      }
+    });
+
     return hasChanged ? nextState : state
   }
 }

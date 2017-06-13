@@ -59,6 +59,9 @@ export default function createStore(reducer, preloadedState, enhancer) {
   let currentListeners = []
   let nextListeners = currentListeners
   let isDispatching = false
+  let watchListeners = {
+
+  }
 
   function ensureCanMutateNextListeners() {
     if (nextListeners === currentListeners) {
@@ -120,9 +123,53 @@ export default function createStore(reducer, preloadedState, enhancer) {
       nextListeners.splice(index, 1)
     }
   }
+  function subscribeByKey(listenerObject){
+    if (typeof listener !== 'object') {
+      throw new Error('Expected listener to be a Object.')
+    }
+
+    let isObjectSubscribed = true;
+
+    const keys = Object.keys(listenerObject);
+
+    const unsubscribes = keys.map(key => {
+      if (!watchListeners[key]) {
+        watchListeners[key] = [];
+      }
+
+      let isFnSubscribed = true;
+      const listener = listenerObject[key];
+      const keyListeners = watchListeners[key];
+
+      if (typeof listener !== 'function') {
+        throw new Error(`Expected listener for "${key}" to be a Function.`)
+      }
+
+      keyListeners.push(listener);
+
+      return function unsubscribe(){
+        if(!isFnSubscribed){
+          return;
+        }
+        isFnSubscribed = false;
+
+        const index = keyListeners.indexOf(listener);
+        keyListeners.splice(index, 1);
+      }
+    });
+
+    return function unsubscribeAllKeys() {
+      if(!isObjectSubscribed){
+        return;
+      }
+      isObjectSubscribed = false;
+
+      unsubscribes.forEach(unsubFn => unsubFn());
+    }
+  }
 
   /**
-   * Dispatches an action. It is the only way to trigger a state change.
+   * Dispatches an action.It is the only way to trigger a state change.
    *
    * The `reducer` function, used to create the store, will be called with the
    * current state tree and the given `action`. Its return value will
@@ -167,7 +214,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
 
     try {
       isDispatching = true
-      currentState = currentReducer(currentState, action)
+      currentState = currentReducer(currentState, action, watchListeners)
     } finally {
       isDispatching = false
     }
@@ -200,45 +247,6 @@ export default function createStore(reducer, preloadedState, enhancer) {
     dispatch({ type: ActionTypes.INIT })
   }
 
-  /**
-   * Interoperability point for observable/reactive libraries.
-   * @returns {observable} A minimal observable of state changes.
-   * For more information, see the observable proposal:
-   * https://github.com/tc39/proposal-observable
-   */
-  function observable() {
-    const outerSubscribe = subscribe
-    return {
-      /**
-       * The minimal observable subscription method.
-       * @param {Object} observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns {subscription} An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */
-      subscribe(observer) {
-        if (typeof observer !== 'object') {
-          throw new TypeError('Expected the observer to be an object.')
-        }
-
-        function observeState() {
-          if (observer.next) {
-            observer.next(getState())
-          }
-        }
-
-        observeState()
-        const unsubscribe = outerSubscribe(observeState)
-        return { unsubscribe }
-      },
-
-      [$$observable]() {
-        return this
-      }
-    }
-  }
-
   // When a store is created, an "INIT" action is dispatched so that every
   // reducer returns their initial state. This effectively populates
   // the initial state tree.
@@ -247,8 +255,8 @@ export default function createStore(reducer, preloadedState, enhancer) {
   return {
     dispatch,
     subscribe,
+    subscribeByKey，
     getState,
     replaceReducer,
-    [$$observable]: observable
   }
 }
