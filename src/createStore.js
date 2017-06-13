@@ -255,7 +255,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
   return {
     dispatch,
     subscribe,
-    subscribeByKey，
+    subscribeByKey,
     getState,
     replaceReducer,
   }
