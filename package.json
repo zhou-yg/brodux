@@ -7,7 +7,9 @@
     "src"
   ],
   "scripts": {
-    "build": "webpack --progress --display-error-details"
+    "build": "webpack --progress --display-error-details",
+    "mocha-w": "mocha --watch lib/test.js",
+    "mocha-b": "mocha --watch --require babel-register test/*_test.js"
   },
   "repository": {
     "type": "git",
@@ -42,7 +44,9 @@
     "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015-without-strict": "0.0.4",
+    "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "mocha": "^3.4.2",
     "webpack": "^2.6.1"
   }
 }
