@@ -123,6 +123,9 @@ export default function createStore(reducer, preloadedState, enhancer) {
       nextListeners.splice(index, 1)
     }
   }
+  /**
+   * 
+   */
   function subscribeByKey(listenerObject){
     if (typeof listener !== 'object') {
       throw new Error('Expected listener to be a Object.')

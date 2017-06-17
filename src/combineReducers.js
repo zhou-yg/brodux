@@ -144,6 +144,7 @@ export default function combineReducers(reducers) {
     let hasChanged = false
     const nextState = {}
     const changedStateKey = [];
+    
     for (let i = 0; i < finalReducerKeys.length; i++) {
       const key = finalReducerKeys[i]
       const reducer = finalReducers[key]
