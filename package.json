@@ -2,7 +2,7 @@
   "name": "brodux",
   "version": "1.0.4",
   "description": "魔改redux",
-  "main": "lib/index.js",
+  "main": "output/index.js",
   "files": [
     "src"
   ],
