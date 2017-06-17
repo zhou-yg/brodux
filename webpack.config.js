@@ -7,7 +7,7 @@ module.exports = {
     index: path.join(__dirname, './src/index.js'),
   },
   output: {
-    path: path.join(__dirname, './output/'),
+    path: path.join(__dirname, './lib/'),
     filename: '[name].js'
   },
   resolve: {

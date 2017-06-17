@@ -2,8 +2,10 @@
   "name": "brodux",
   "version": "1.0.8",
   "description": "魔改redux",
-  "main": "output/index.js",
+  "main": "lib/index.js",
   "files": [
+    "src",
+    "lib"
   ],
   "scripts": {
     "build": "webpack --progress --display-error-details",
