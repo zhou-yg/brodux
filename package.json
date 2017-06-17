@@ -1,6 +1,6 @@
 {
   "name": "brodux",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "魔改redux",
   "main": "lib/index.js",
   "files": [
@@ -12,8 +12,7 @@
     "mocha-b": "mocha --watch --require babel-register test/*_test.js"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/reactjs/redux.git"
+    "type": "git"
   },
   "keywords": [
     "redux",
@@ -29,11 +28,8 @@
     "elm"
   ],
   "authors": [
-    "Dan Abramov <dan.abramov@me.com> (https://github.com/gaearon)",
-    "Andrew Clark <acdlite@me.com> (https://github.com/acdlite)"
   ],
-  "license": "MIT",
-  "homepage": "http://redux.js.org",
+  "license": "GPL2.0",
   "dependencies": {
     "lodash": "^4.2.1",
     "lodash-es": "^4.2.1"
