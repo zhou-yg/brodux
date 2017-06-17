@@ -1,6 +1,6 @@
 {
   "name": "brodux",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "魔改redux",
   "main": "output/index.js",
   "files": [
