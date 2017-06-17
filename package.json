@@ -1,14 +1,17 @@
 {
   "name": "brodux",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "魔改redux",
   "main": "lib/index.js",
   "files": [
     "src",
-    "lib"
+    "lib",
+    "output"
   ],
   "scripts": {
     "build": "webpack --progress --display-error-details",
+    "gulp": "gulp",
+    "build-w": "webpack --watch --progress --display-error-details",
     "mocha-w": "mocha --watch lib/test.js",
     "mocha-b": "mocha --watch --require babel-register test/*_test.js"
   },
@@ -28,8 +31,7 @@
     "flux",
     "elm"
   ],
-  "authors": [
-  ],
+  "authors": [],
   "license": "GPL2.0",
   "dependencies": {
     "lodash": "^4.2.1",
@@ -40,9 +42,12 @@
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-es2015-spread": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-es2015-without-strict": "0.0.4",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "mocha": "^3.4.2",
     "webpack": "^2.6.1"
   }

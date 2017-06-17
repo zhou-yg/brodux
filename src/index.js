@@ -25,10 +25,13 @@ if (
   )
 }
 
-export {
+const out = {
   createStore,
   combineReducers,
   bindActionCreators,
   applyMiddleware,
-  compose
+  compose,
 }
+
+
+export default out;
