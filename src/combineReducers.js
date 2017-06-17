@@ -144,7 +144,7 @@ export default function combineReducers(reducers) {
     let hasChanged = false
     const nextState = {}
     const changedStateKey = [];
-    
+
     for (let i = 0; i < finalReducerKeys.length; i++) {
       const key = finalReducerKeys[i]
       const reducer = finalReducers[key]
@@ -168,7 +168,7 @@ export default function combineReducers(reducers) {
       const watchCallbacks = watchListeners[key];
       if(watchCallbacks && watchCallbacks.length > 0){
         watchCallbacks.forEach(fn => {
-          fn(nextState[key], state[key]);
+          fn(nextState[key], state[key], nextState);
         });
       }
     });
