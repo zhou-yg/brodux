@@ -1,10 +1,9 @@
 {
   "name": "brodux",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "魔改redux",
   "main": "output/index.js",
   "files": [
-    "src"
   ],
   "scripts": {
     "build": "webpack --progress --display-error-details",

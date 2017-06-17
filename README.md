@@ -1,7 +1,5 @@
 ## brodux
 
-
-
 ```
 const store = createStore(...);
 
@@ -12,3 +10,7 @@ store.subscribeByKey({
    }
 });
 ```
+
+
+### version
+1.0.8
