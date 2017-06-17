@@ -1,4 +1,6 @@
-const redux = require('../lib/index.js');
+const redux = require('../lib/index.js').default;
+
+console.log(redux);
 
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
@@ -6,9 +8,9 @@ const applyMiddleware = redux.applyMiddleware;
 
 function test(state, action) {
   if(state){
-    return state++;
+    return state + 1;
   }
-  return 0;
+  return 1;
 }
 
 const store = createStore(combineReducers({
@@ -20,6 +22,10 @@ store.subscribeByKey({
   test(v, old){
     console.log(v, old);
   }
+});
+
+store.subscribe(() => {
+  console.log(store.getState());
 });
 
 

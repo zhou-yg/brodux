@@ -126,7 +126,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
    *
    */
   function subscribeByKey(listenerObject){
-    if (typeof listener !== 'object') {
+    if (typeof listenerObject !== 'object') {
       throw new Error('Expected listener to be a Object.')
     }
 
