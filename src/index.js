@@ -33,5 +33,6 @@ const out = {
   compose,
 }
 
+console.log('x')
 
 export default out;

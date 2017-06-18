@@ -164,13 +164,15 @@ export default function combineReducers(reducers) {
       hasChanged = hasChanged || isChanged;
     }
 
-    changedStateKey.forEach(key => {
-      const watchCallbacks = watchListeners[key];
-      if(watchCallbacks && watchCallbacks.length > 0){
-        watchCallbacks.forEach(fn => {
-          fn(nextState[key], state[key], nextState);
-        });
-      }
+    requestAnimationFrame(() => {
+      changedStateKey.forEach(key => {
+        const watchCallbacks = watchListeners[key];
+        if(watchCallbacks && watchCallbacks.length > 0){
+          watchCallbacks.forEach(fn => {
+            fn(nextState[key], state[key], nextState);
+          });
+        }
+      });      
     });
 
     return hasChanged ? nextState : state
