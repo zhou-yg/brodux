@@ -1,6 +1,8 @@
 import { ActionTypes } from './createStore'
 import isPlainObject from 'lodash/isPlainObject'
 import warning from './utils/warning'
+import raf from 'raf';
+
 
 function getUndefinedStateErrorMessage(key, action) {
   const actionType = action && action.type
@@ -164,7 +166,7 @@ export default function combineReducers(reducers) {
       hasChanged = hasChanged || isChanged;
     }
 
-    requestAnimationFrame(() => {
+    raf(() => {
       changedStateKey.forEach(key => {
         const watchCallbacks = watchListeners[key];
         if(watchCallbacks && watchCallbacks.length > 0){
@@ -172,7 +174,7 @@ export default function combineReducers(reducers) {
             fn(nextState[key], state[key], nextState);
           });
         }
-      });      
+      });
     });
 
     return hasChanged ? nextState : state
